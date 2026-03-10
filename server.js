@@ -9,6 +9,7 @@ const connectDB = require('./config/db');
 const errorHandler = require('./middleware/error');
 
 const app = express();
+const eventsRoute = require("./routes/eventsRoute");
 
 // LOUD REQUEST LOGGER - This will show up in your terminal
 app.use((req, res, next) => {
@@ -86,4 +87,5 @@ const server = app.listen(PORT, '0.0.0.0', () => {
   });
 });
 
+module.exports = app;
 module.exports = server;
