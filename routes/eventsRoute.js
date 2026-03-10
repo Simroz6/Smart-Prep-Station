@@ -1,43 +1,37 @@
 const express = require("express");
+const serverless = require("serverless-http"); // Wrap Express for serverless
 const router = express.Router();
+const app = express();
 
-/* Get all events */
+app.use(express.json());
+
+// Routes
 router.get("/", (req, res) => {
-  res.json({ message: "Fetch all events" });
+  res.json({ message: "Events API working" });
 });
 
-/* Get a single event */
 router.get("/:id", (req, res) => {
-  const id = req.params.id;
-  res.json({ message: `Fetch event with id ${id}` });
+  res.json({ message: `Fetch event with id ${req.params.id}` });
 });
 
-/* Create a new event */
 router.post("/", (req, res) => {
   const { title, description, date } = req.body;
-
   res.status(201).json({
-    message: "Event created successfully",
+    message: "Event created",
     event: { title, description, date }
   });
 });
 
-/* Update an event */
 router.put("/:id", (req, res) => {
-  const id = req.params.id;
-
-  res.json({
-    message: `Event ${id} updated successfully`
-  });
+  res.json({ message: `Event ${req.params.id} updated` });
 });
 
-/* Delete an event */
 router.delete("/:id", (req, res) => {
-  const id = req.params.id;
-
-  res.json({
-    message: `Event ${id} deleted successfully`
-  });
+  res.json({ message: `Event ${req.params.id} deleted` });
 });
 
-module.exports = router;
+// Mount router
+app.use("/", router);
+
+// Export as serverless function
+module.exports = serverless(app);
