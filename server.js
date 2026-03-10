@@ -43,6 +43,7 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
+app.use('/api/events', eventRoutes);
 app.use(errorHandler);
 
 app.use((req, res) => {
